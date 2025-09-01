@@ -4,6 +4,7 @@ import { CardProduct } from '../CardProduct';
 import Carousel from 'react-multi-carousel';
 import { Container, Title } from './styles';
 import 'react-multi-carousel/lib/styles.css';
+import { formatPrice } from '../../utils/formatPrice';
 
 
 export function OffersCarousel() {
@@ -14,7 +15,10 @@ export function OffersCarousel() {
     async function loadProducts() {
       const { data } = await api.get('/products');
 
-      const onlyOffers = data.filter(product => product.offer === true);
+      const onlyOffers = data.filter(product => product.offer === true)
+      .map(product => ({ currencyValue: formatPrice(product.price), ...product }
+
+        ));
 
       setOffers(onlyOffers);
       console.log('Produtos em oferta encontrados:', onlyOffers);
