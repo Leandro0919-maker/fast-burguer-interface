@@ -66,13 +66,12 @@ export const CategoryButton = styled(Link)`
      text-decoration: none;
      cursor: pointer;
      background: none;
-     color: #9758a6;
+     color: ${props => props.$isActiveCategory ? '#9758a6' : '#555'};
      font-size: 20px;
      font-weight: bold;
      padding-top: 10px;
      line-height: 24px;
-     border-bottom: 2px solid #9758a6 
-
+     border-bottom: ${props => props.$isActiveCategory && '3px solid #9758a6'}; 
 `;
 
 export const ProductsContainer = styled.div`
@@ -84,6 +83,28 @@ export const ProductsContainer = styled.div`
     max-width: 1280px;
     margin: 50px auto 0;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+`;
 
+export const NavigationContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+`;
 
+export const BackButton = styled.button`
+    background: transparent;
+    border: 2px solid #9758a6;
+    color: #9758a6;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+
+    &:hover {
+        background: #9758a6;
+        color: #fff;
+    }
 `;

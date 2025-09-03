@@ -1,25 +1,34 @@
 import { useEffect, useState } from "react";
-import { Container, Banner, CategoryMenu, ProductsContainer, CategoryButton } from "./styles"
+import { Container, Banner, CategoryMenu, ProductsContainer, CategoryButton, NavigationContainer, BackButton } from "./styles"
 import { api } from "../../services/api";
 import { formatPrice } from "../../utils/formatPrice";
 import { CardProduct } from "../../components/CardProduct";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export function Menu(){
 
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(0);
   const navigate = useNavigate();
+  const { search } = useLocation;
+  const queryParams = new URLSearchParams(search);
+  
+  const [activeCategory, setActiveCategory] = useState(()=> {
+    const categoryId = +queryParams.get('categoria');
 
+    if(categoryId){
+      return categoryId;
+    } 
+    return 0;
+});
 
   useEffect(() => {
     async function loadCategories() {
 
       const { data } = await api.get('/categories');
-
-      const newCategories = [{ id:0, name: 'Todos' }, ...data];
+     
+      const newCategories = [{ id: 0, name: 'Todas' }, ...data];
 
       setCategories(newCategories);
     }
@@ -66,10 +75,16 @@ export function Menu(){
             
         </Banner>
 
+        <NavigationContainer>
+            <BackButton onClick={() => navigate(-1)}>Voltar</BackButton>
+        </NavigationContainer>
+
+
         <CategoryMenu>
             {categories.map(category => (
                 <CategoryButton 
                 key= {category.id}
+                $isActiveCategory= {category.id === activeCategory}
                 onClick= {() => {
                   navigate({
                     pathname: '/cardapio',

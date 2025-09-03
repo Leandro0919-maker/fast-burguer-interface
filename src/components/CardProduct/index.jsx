@@ -8,7 +8,7 @@ export function CardProduct({ product }) {
     if (!product) {
         return null; 
     }
-    
+      
     return (
         <Container>
             <CardImage src={product.url} alt={product.name} />

@@ -5,7 +5,10 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('fastburguer:userData');
+
+    const token = userData && JSON.parse(userData).token;
+
     console.log('INTERCEPTOR: O token encontrado foi:', token); 
     
     if (token) {
