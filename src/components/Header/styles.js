@@ -41,7 +41,9 @@ export const Navigation = styles.nav`
 `;
 
 export const HeaderLink = styles(Link)`
-   color: #fff;
+   color: ${props => props.$isActive ? '#9758a5' : '#fff'};
+   border-bottom: ${(props) => (props.$isActive ? '1px solid #9758a5' : 'none')};
+   padding-bottom: 3px;
    font-size: 18px;
    font-weight: 500;
    text-decoration: none;
